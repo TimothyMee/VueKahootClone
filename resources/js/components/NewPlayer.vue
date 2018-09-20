@@ -1,11 +1,23 @@
 <template>
-    <div class="container">
+    <div class="container col-md-12" style="background: linear-gradient(to top, #4481eb 0%, #04befe 100%); height:100%; width:100%">
         <div class="row justify-content-center">
+            <div class="col-md-12">
+                <br><br><br><br><br><br><br>
+            </div>
+            <div class="col-md-12">
+                <div class="container col-md-4">
+                    <img src="../../../public/svg/Kahoot_Logo.svg" alt="">
+                </div>
+            </div>
             <div class="col-md-3">
                 <!--<center><h5 style="color:white">Enter Name</h5></center>-->
-                <input type="text" v-model="gamepin" placeholder="Enter Game Pin e.g 223003" id="gamepin" class="form-control">
-                <input type="text" v-model="username" placeholder="Enter Username e.g Timothy" id="name" class="form-control">
+                <input type="text" v-model="gamepin" placeholder="Enter Game Pin" id="gamepin" class="form-control">
+                <input type="text" v-model="username" placeholder="Enter Username" id="name" class="form-control">
                 <button class="btn btn-dark col-md-12" @click.prevent="submit()">Submit</button>
+            </div>
+
+            <div class="col-md-12">
+                <br><br><br><br><br><br><br>
             </div>
         </div>
     </div>
@@ -56,5 +68,15 @@
     }
     .form-control{
         margin-top: 10px;
+        height: 50px;
+        border-radius:0px;
+        font-weight:bold;
+        color:black;
+        text-align:center;
+        font-size:20px;
+    }
+
+    .form-control:focus{
+        border:2px solid black;
     }
 </style>

@@ -57283,7 +57283,7 @@ exports = module.exports = __webpack_require__(47)(false);
 
 
 // module
-exports.push([module.i, "\n.btn[data-v-e1814698]{\n    white-space: normal;\n    word-wrap: break-word;\n}\n", ""]);
+exports.push([module.i, "\n.my-btn[data-v-e1814698]{\n    white-space: normal;\n    word-wrap: break-word;\n    height: 150px;\n    width: 49.5%;\n    margin-bottom:7px;\n}\n.btn[data-v-e1814698]{\n    font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -57615,9 +57615,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -57626,8 +57623,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             questions: '',
             count: 0,
-            btnClassWrong: 'btn btn-lg btn-outline-warning',
-            btnClassRight: 'btn btn-lg btn-outline-warning',
+            btnClassWrong: 'btn btn-lg btn-outline-danger',
+            btnClassRight: 'btn btn-lg btn-outline-danger',
             randomNumber: 2,
             started: false,
             username: ''
@@ -57687,11 +57684,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.count += 1;
 
             if (this.count <= 9) {
-                this.btnClassWrong = 'btn btn-lg btn-outline-warning';
-                this.btnClassRight = 'btn btn-lg btn-outline-warning';
-                this.randomNumber = Math.floor(Math.random() * 4) + 1;;
+                this.btnClassWrong = 'btn btn-lg btn-outline-danger';
+                this.btnClassRight = 'btn btn-lg btn-outline-danger';
+                this.randomNumber = Math.floor(Math.random() * 4) + 1;
             } else {
                 this.started = false;
+
+                /*pusher code to send final result goes here*/
+
+                axios.post('/add-score', { 'user': this.username, 'score': this.$store.state.result[this.username].score }).then(function (res) {
+                    console.log('broadcast route', res);
+                }).catch(function (err) {
+                    console.log(err);
+                });
+
+                setTimeout();
             }
         },
         listening: function listening() {
@@ -58673,136 +58680,106 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm.started
-      ? _c(
-          "div",
-          {
-            staticClass: "row justify-content-center",
-            staticStyle: { "font-family": "Quicksand" }
-          },
-          [
-            _c("div", { staticClass: "container col-md-12" }, [
-              _c("h4", { staticStyle: { color: "white" } }, [
-                _c("strong", [
-                  _vm._v("Welcome " + _vm._s(_vm.username) + " to the Quiz app")
-                ]),
-                _c("br"),
-                _c("br")
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "container col-md-5",
-                staticStyle: {
-                  background: "#1177bd",
-                  "border-radius": "10%",
-                  color: "white"
-                }
-              },
-              [
-                _c("h4", [
+  return _c(
+    "div",
+    {
+      staticClass: "container col-md-12",
+      staticStyle: {
+        "background-color": "#efefef",
+        width: "100%",
+        "min-height": "100%"
+      }
+    },
+    [
+      _vm.started
+        ? _c(
+            "div",
+            {
+              staticClass: "row justify-content-center",
+              staticStyle: { "font-family": "Quicksand" }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "container col-md-12 ",
+                  staticStyle: {
+                    "background-color": "white",
+                    "box-shadow": "5px 5px 5px #BFBFBF"
+                  }
+                },
+                [
+                  _c("center", [
+                    _c("h4", [
+                      _c(
+                        "p",
+                        {
+                          staticStyle: {
+                            color: "#3cbdfc",
+                            "font-weight": "bold"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.questions[_vm.count].category) +
+                              "||" +
+                              _vm._s(_vm.randomNumber) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticStyle: { "font-weight": "bold" } }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm.questions[_vm.count].question) +
+                            "\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "h5",
+                        {
+                          staticStyle: {
+                            "font-weight": "bold",
+                            color: "#d9534f"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Score: " +
+                              _vm._s(
+                                _vm.$store.state.result[_vm.username].score
+                              ) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-12", staticStyle: { height: "60%" } },
+                [
+                  _c("br"),
                   _c("br"),
                   _vm._v(" "),
-                  _c("p", { staticStyle: { color: "#3cbdfc" } }, [
-                    _vm._v(
-                      _vm._s(_vm.questions[_vm.count].category) +
-                        "\n                    "
-                    ),
-                    _c("span", { staticStyle: { float: "right" } }, [
-                      _vm._v("Q"),
-                      _c("span", { staticStyle: { color: "white" } }, [
-                        _vm._v(_vm._s(_vm.count + 1))
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("h5", {
-                    domProps: {
-                      textContent: _vm._s(_vm.questions[_vm.count].question)
-                    }
-                  })
-                ]),
-                _vm._v(
-                  "\n\n            " +
-                    _vm._s(_vm.$store.state.result[_vm.username].score) +
-                    "    ||     " +
-                    _vm._s(_vm.randomNumber) +
-                    "\n\n            "
-                ),
-                _c(
-                  "div",
-                  { staticClass: "col-md-12" },
-                  [
-                    _vm._l(_vm.questions[_vm.count].incorrect_answers, function(
-                      incorrect,
-                      index
-                    ) {
-                      return _c("span", [
-                        index + 1 == _vm.randomNumber
-                          ? _c("span", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "col-md-12",
-                                  class: _vm.btnClassRight,
-                                  staticStyle: { "border-radius": "100px" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.submit("Right")
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("span", {
-                                    domProps: {
-                                      textContent: _vm._s(
-                                        _vm.questions[_vm.count].correct_answer
-                                      )
-                                    }
-                                  })
-                                ]
-                              ),
-                              _c("br"),
-                              _c("br")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "col-md-12",
-                            class: _vm.btnClassWrong,
-                            staticStyle: { "border-radius": "100px" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.submit("Wrong")
-                              }
-                            }
-                          },
-                          [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(incorrect) }
-                            })
-                          ]
-                        ),
-                        _c("br"),
-                        _c("br")
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _vm.randomNumber >= 4
-                      ? _c("span", [
-                          _c(
+                  _vm._l(_vm.questions[_vm.count].incorrect_answers, function(
+                    incorrect,
+                    index
+                  ) {
+                    return _c("span", [
+                      index + 1 == _vm.randomNumber
+                        ? _c(
                             "button",
                             {
-                              staticClass: "col-md-12",
+                              staticClass: "my-btn",
                               class: _vm.btnClassRight,
-                              staticStyle: { "border-radius": "100px" },
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
@@ -58811,55 +58788,104 @@ var render = function() {
                               }
                             },
                             [
-                              _c("span", {
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.questions[_vm.count].correct_answer
-                                  )
-                                }
-                              })
+                              _c("span", [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(
+                                      _vm.questions[_vm.count].correct_answer
+                                    ) +
+                                    "\n                    "
+                                )
+                              ])
                             ]
-                          ),
-                          _c("br"),
-                          _c("br")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("span", [
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-large col-md-11",
-                          staticStyle: {
-                            "background-color": "whitesmoke",
-                            color: "#1177bd",
-                            "border-radius": "100px"
-                          },
+                          staticClass: "my-btn",
+                          class: _vm.btnClassWrong,
                           on: {
                             click: function($event) {
-                              _vm.nextQuestion()
+                              $event.preventDefault()
+                              _vm.submit("Wrong")
                             }
                           }
                         },
                         [
-                          _vm._v(
-                            "\n                        Continue\n                    "
-                          )
+                          _c("span", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(incorrect) +
+                                "\n                    "
+                            )
+                          ])
                         ]
-                      )
-                    ]),
-                    _vm._v(" "),
+                      ),
+                      _vm._v(" "),
+                      _vm.randomNumber >= 4 && index == 2
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "my-btn",
+                              class: _vm.btnClassRight,
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.submit("Right")
+                                }
+                              }
+                            },
+                            [
+                              _c("span", [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(
+                                      _vm.questions[_vm.count].correct_answer
+                                    ) +
+                                    "\n                    "
+                                )
+                              ])
+                            ]
+                          )
+                        : _vm._e()
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [
                     _c("br"),
-                    _c("br")
-                  ],
-                  2
-                )
-              ]
-            )
-          ]
-        )
-      : _c("div", [_vm._v("\n        Coming soon........\n    ")])
-  ])
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary col-md-12",
+                        staticStyle: { height: "150px" },
+                        on: {
+                          click: function($event) {
+                            _vm.nextQuestion()
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Continue\n                "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("br"),
+                  _c("br")
+                ],
+                2
+              )
+            ]
+          )
+        : _c("div", [_vm._v("\n        Coming soon........\n    ")])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -59048,7 +59074,7 @@ exports = module.exports = __webpack_require__(47)(false);
 
 
 // module
-exports.push([module.i, "\n.btn[data-v-45aa2b74]{\n    white-space: normal;\n    word-wrap: break-word;\n    margin-top: 10px;\n}\n.form-control[data-v-45aa2b74]{\n    margin-top: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.btn[data-v-45aa2b74]{\n    white-space: normal;\n    word-wrap: break-word;\n    margin-top: 10px;\n}\n.form-control[data-v-45aa2b74]{\n    margin-top: 10px;\n    height: 50px;\n    border-radius:0px;\n    font-weight:bold;\n    color:black;\n    text-align:center;\n    font-size:20px;\n}\n.form-control[data-v-45aa2b74]:focus{\n    border:2px solid black;\n}\n", ""]);
 
 // exports
 
@@ -59061,6 +59087,18 @@ exports.push([module.i, "\n.btn[data-v-45aa2b74]{\n    white-space: normal;\n   
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes_js__ = __webpack_require__(65);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -59118,79 +59156,136 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.gamepin,
-              expression: "gamepin"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            placeholder: "Enter Game Pin e.g 223003",
-            id: "gamepin"
-          },
-          domProps: { value: _vm.gamepin },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.gamepin = $event.target.value
-            }
-          }
-        }),
+  return _c(
+    "div",
+    {
+      staticClass: "container col-md-12",
+      staticStyle: {
+        background: "linear-gradient(to top, #4481eb 0%, #04befe 100%)",
+        height: "100%",
+        width: "100%"
+      }
+    },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _vm._m(0),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.username,
-              expression: "username"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            placeholder: "Enter Username e.g Timothy",
-            id: "name"
-          },
-          domProps: { value: _vm.username },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.username = $event.target.value
-            }
-          }
-        }),
+        _vm._m(1),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-dark col-md-12",
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.gamepin,
+                expression: "gamepin"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Enter Game Pin",
+              id: "gamepin"
+            },
+            domProps: { value: _vm.gamepin },
             on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.submit()
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.gamepin = $event.target.value
               }
             }
-          },
-          [_vm._v("Submit")]
-        )
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.username,
+                expression: "username"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Enter Username", id: "name" },
+            domProps: { value: _vm.username },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.username = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-dark col-md-12",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.submit()
+                }
+              }
+            },
+            [_vm._v("Submit")]
+          )
+        ]),
+        _vm._v(" "),
+        _vm._m(2)
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "container col-md-4" }, [
+        _c("img", {
+          attrs: {
+            src: __webpack_require__(66),
+            alt: ""
+          }
+        })
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br")
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -61855,6 +61950,12 @@ if (inBrowser && window.Vue) {
         component: __WEBPACK_IMPORTED_MODULE_2__components_SinglePlayer_vue___default.a
     }]
 }));
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/Kahoot_Logo.svg?46f7e5d909ed4bb9ce7f1129c6b18857";
 
 /***/ })
 /******/ ]);

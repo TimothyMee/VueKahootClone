@@ -1,56 +1,53 @@
 <template>
-    <div class="container">
+    <div class="container col-md-12" style="background-color: #efefef; width: 100%; min-height:100%">
         <div v-if="started" style="font-family: Quicksand;" class="row justify-content-center">
-            <div class="container col-md-12">
-                <h4 style="color:white">
-                    <strong>Welcome {{username}} to the Quiz app</strong><br><br>
-                </h4>
+            <div class="container col-md-12 " style="background-color: white; box-shadow: 5px 5px 5px #BFBFBF">
+                <center>
+                    <h4>
+                        <p style="color: #3cbdfc; font-weight: bold;">
+                            {{questions[count].category}}||{{randomNumber}}
+                        </p>
+                        <p style="font-weight: bold;">
+                            {{questions[count].question}}
+                        </p>
+                        <h5 style="font-weight: bold; color:#d9534f;">
+                            Score: {{$store.state.result[username].score}}
+                        </h5>
+                    </h4>
+                </center>
             </div>
-            <div class="container col-md-5" style="background: #1177bd; border-radius:10%; color: white;">
-                <h4>
-                    <br>
-                    <p style="color: #3cbdfc;">{{questions[count].category}}
-                        <span style="float: right;">Q<span style="color: white;">{{count+1}}</span></span>
-                    </p>
-
-                    <h5 v-text="questions[count].question"></h5>
-                </h4>
-
-                {{$store.state.result[username].score}}    ||     {{randomNumber}}
-
-                <div class="col-md-12">
-                    <span v-for="(incorrect, index) in questions[count].incorrect_answers">
-
-                        <span v-if="index+1 == randomNumber">
-                            <button :class="btnClassRight" @click.prevent="submit('Right')"
-                                    class="col-md-12" style="border-radius:100px;">
-                                <span v-text="questions[count].correct_answer"></span>
-                            </button><br><br>
+            <div class="col-md-12" style="height:60%;">
+                <br><br>
+                <span v-for="(incorrect, index) in questions[count].incorrect_answers">
+                    <button :class="btnClassRight" @click.prevent="submit('Right')"
+                             v-if="index+1 == randomNumber" class="my-btn">
+                        <span>
+                            {{questions[count].correct_answer}}
                         </span>
+                    </button>
+                    <button :class="btnClassWrong" @click.prevent="submit('Wrong')"
+                             class="my-btn">
+                        <span>
+                            {{incorrect}}
+                        </span>
+                    </button>
+                    <button v-if="(randomNumber >= 4) && (index == 2)" :class="btnClassRight"
+                            @click.prevent="submit('Right')"
+                             class="my-btn">
+                        <span>
+                            {{questions[count].correct_answer}}
+                        </span>
+                    </button>
+                </span>
 
-                        <button :class="btnClassWrong" @click.prevent="submit('Wrong')"
-                                class="col-md-12" style="border-radius:100px;">
-                            <span v-text="incorrect"></span>
-                        </button><br><br>
-
-                    </span>
-
-                    <span v-if="randomNumber >= 4">
-                        <button :class="btnClassRight" @click.prevent="submit('Right')"
-                                class="col-md-12" style="border-radius:100px;">
-                            <span v-text="questions[count].correct_answer"></span>
-                        </button><br><br>
-                    </span>
-
-
-                    <span>
-                        <button class="btn btn-large col-md-11" @click="nextQuestion()"
-                                style="background-color: whitesmoke; color:#1177bd; border-radius:100px;">
-                            Continue
-                        </button>
-                    </span>
+                <span>
                     <br><br>
-                </div>
+                    <button class="btn btn-primary col-md-12" @click="nextQuestion()"
+                            style="height: 150px;">
+                        Continue
+                    </button>
+                </span>
+                <br><br>
             </div>
         </div>
 
@@ -68,8 +65,8 @@
     return {
         questions: '',
         count : 0,
-        btnClassWrong: 'btn btn-lg btn-outline-warning',
-        btnClassRight: 'btn btn-lg btn-outline-warning',
+        btnClassWrong: 'btn btn-lg btn-outline-danger',
+        btnClassRight: 'btn btn-lg btn-outline-danger',
         randomNumber:2,
         started:false,
         username:''
@@ -133,11 +130,23 @@
             this.count += 1;
 
             if(this.count <= 9){
-                this.btnClassWrong = 'btn btn-lg btn-outline-warning';
-                this.btnClassRight = 'btn btn-lg btn-outline-warning';
-                this.randomNumber= Math.floor(Math.random() * 4) + 1;;
+                this.btnClassWrong = 'btn btn-lg btn-outline-danger';
+                this.btnClassRight = 'btn btn-lg btn-outline-danger';
+                this.randomNumber= Math.floor(Math.random() * 4) + 1;
             }else{
                 this.started = false;
+
+                /*pusher code to send final result goes here*/
+
+                axios.post('/add-score', {'user': this.username, 'score': this.$store.state.result[this.username].score})
+                    .then(res => {
+                        console.log('broadcast route', res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+
+                setTimeout()
             }
         },
 
@@ -171,8 +180,14 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .btn{
+    .my-btn{
         white-space: normal;
         word-wrap: break-word;
+        height: 150px;
+        width: 49.5%;
+        margin-bottom:7px;
+    }
+    .btn{
+        font-weight: bold;
     }
 </style>

@@ -15,7 +15,7 @@
 
     </head>
     <body>
-        <div id="app" class="col-md-12" style="background: linear-gradient(to top, #4481eb 0%, #04befe 100%); height:100%;">
+        <div id="app" class="" style="">
             <router-view></router-view>
         </div>
     </body>
