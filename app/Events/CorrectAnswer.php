@@ -22,11 +22,13 @@ class CorrectAnswer implements ShouldBroadcast
 
     public $user;
     public $score;
+    public  $message;
 
-    public function __construct($user, $score)
+    public function __construct($user, $score, $message)
     {
         $this->user = $user;
         $this->score = $score;
+        $this->message = $message;
     }
 
     /**

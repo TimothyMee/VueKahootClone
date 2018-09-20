@@ -10,8 +10,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 import store from './store/store'
 import VueRouter from 'vue-router'
+import Notifications from 'vue-notification'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
+Vue.use(Notifications)
+
 
 import router from './routes.js'
 

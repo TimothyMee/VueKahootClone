@@ -11,7 +11,7 @@ class ScoreController extends Controller
     {
         $request = $request->all();
 
-        broadcast(new CorrectAnswer($request['user'], $request['score']))->toOthers();
+        broadcast(new CorrectAnswer($request['user'], $request['score'], $request['message']))->toOthers();
         return 'Good Job';
     }
 }

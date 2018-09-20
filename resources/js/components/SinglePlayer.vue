@@ -1,5 +1,6 @@
 <template>
     <div class="container col-md-12" style="background-color: #efefef; width: 100%; min-height:100%">
+        <notifications position="top right"/>
         <div v-if="started" style="font-family: Quicksand;" class="row justify-content-center">
             <div class="container col-md-12 " style="background-color: white; box-shadow: 5px 5px 5px #BFBFBF">
                 <center>
@@ -112,7 +113,10 @@
 
                 /*pusher code goes here*/
 
-                axios.post('/add-score', {'user': this.username, 'score': this.$store.state.result[this.username].score})
+                axios.post('/add-score', {'user': this.username,
+                                            'score': this.$store.state.result[this.username].score,
+                                            'message': "Score Update"
+                                            })
                     .then(res => {
                         console.log('broadcast route', res);
                     })
@@ -138,9 +142,12 @@
 
                 /*pusher code to send final result goes here*/
 
-                axios.post('/add-score', {'user': this.username, 'score': this.$store.state.result[this.username].score})
+                axios.post('/add-score', {'user': this.username,
+                                            'score': this.$store.state.result[this.username].score,
+                                            'message': "Score Update"
+                                            })
                     .then(res => {
-                        console.log('broadcast route', res);
+//                        console.log('broadcast route', res);
                     })
                     .catch(err => {
                         console.log(err);
@@ -153,7 +160,7 @@
         listening(){
             window.Echo.channel('score')
                 .listen('CorrectAnswer', (e) =>{
-                    console.log(e);
+//                    console.log(e);
 
                     let user = {
                         username: e.user,
@@ -162,6 +169,13 @@
                     }
 
                     this.$store.commit('updateScore', user);
+
+                    if(e.message === "New User"){
+                        this.$notify({type: 'error', text: `User "${e.user}" just joined`, duration:4000});
+                    }else if(e.message === "Score Update"){
+                        this.$notify({type: 'error', text: `User ${e.user}'s Score is ${e.score}`, duration:4000});
+                    }
+
                     console.log(this.$store.state.result);
                 });
         }

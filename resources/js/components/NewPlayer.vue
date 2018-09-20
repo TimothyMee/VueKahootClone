@@ -47,7 +47,19 @@
 
                     if(this.username in this.$store.state.result){
                         localStorage.setItem('username', this.username);
-                        console.log(this.$store.state.result);
+                        /*pusher code goes here*/
+
+                        axios.post('/add-score', {'user': this.username,
+                                                    'score': this.$store.state.result[this.username].score,
+                                                    'message': "New User"
+                                                    })
+                            .then(res => {
+                                console.log('broadcast route', res);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+
                         router.push({name: 'SinglePlayer'});
                     }
                 })
