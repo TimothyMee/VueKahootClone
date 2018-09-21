@@ -1,4 +1,5 @@
 <template>
+
     <div class="container col-md-12" style="background-color:#7900C9; height:100%; width:100%">
         <div class="row justify-content-center" v-if="started">
             <div class="col-md-12">
@@ -50,7 +51,8 @@
                             .map(function(v, k) { // insert the key into the object
                                 return lodash.merge({}, v, { key: k });
                             })
-                    .sortBy('score') // sort by name
+                    .sortBy('score')// sort by name
+                    .reverse()
                     .value();
 
                 var position = lodash.findIndex(this.positionArray, {key: this.username}) + 1

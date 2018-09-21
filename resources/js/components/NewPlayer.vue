@@ -1,5 +1,6 @@
 <template>
     <div class="container col-md-12" style="background: linear-gradient(to top, #4481eb 0%, #04befe 100%); height:100%; width:100%">
+        <notifications position="top right"/>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <br><br><br><br><br><br><br>
@@ -37,30 +38,31 @@
 
     methods:{
         submit(){
-            axios.post('/check-pin', gamepin)
+            axios.post('/check-pin', {gamepin: this.gamepin})
                 .then(response => {
+                    console.log(response);
                     if(response.data === 1){
-//                        console.log(response);
-                    }
+                        this.$store.commit('createUser', this.username);
 
-                    this.$store.commit('createUser', this.username);
+                        if(this.username in this.$store.state.result){
+                            localStorage.setItem('username', this.username);
+                            /*pusher code goes here*/
 
-                    if(this.username in this.$store.state.result){
-                        localStorage.setItem('username', this.username);
-                        /*pusher code goes here*/
-
-                        axios.post('/add-score', {'user': this.username,
-                                                    'score': this.$store.state.result[this.username].score,
-                                                    'message': "New User"
-                                                    })
-                            .then(res => {
-                                console.log('broadcast route', res);
+                            axios.post('/add-score', {'user': this.username,
+                                'score': this.$store.state.result[this.username].score,
+                                'message': "New User"
                             })
-                            .catch(err => {
-                                console.log(err);
-                            })
+                                .then(res => {
+//                                    console.log('broadcast route', res);
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                })
 
-                        router.push({name: 'SinglePlayer'});
+                            router.push({name: 'SinglePlayer'});
+                        }
+                    }else{
+                        this.$notify({type: 'error', text: `Game pin is wrong`, duration:4000});
                     }
                 })
                 .catch(error =>{

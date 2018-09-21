@@ -131,7 +131,7 @@
         nextQuestion(){
             this.count += 1;
 
-            if(this.count <= 1){
+            if(this.count <= 9){
                 this.btnClassWrong = 'btn btn-lg btn-outline-danger';
                 this.btnClassRight = 'btn btn-lg btn-outline-danger';
                 this.randomNumber= Math.floor(Math.random() * 4) + 1;

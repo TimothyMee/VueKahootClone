@@ -10,6 +10,10 @@ class AuthController extends Controller
 
     public function verify(Request $request)
     {
-        return 1;
+        $request = $request->all();
+        if($request['gamepin'] == "5497202"){
+            return 1;
+        }
+        return 0;
     }
 }
