@@ -12,9 +12,12 @@ import store from './store/store'
 import VueRouter from 'vue-router'
 import Notifications from 'vue-notification'
 
-Vue.use(VueRouter)
-Vue.use(Notifications)
 
+Vue.use(VueRouter);
+Vue.use(Notifications);
+
+
+window.lodash = require('lodash')
 
 import router from './routes.js'
 
@@ -32,5 +35,5 @@ import router from './routes.js'
 const app = new Vue({
     el: '#app',
     store,
-    router
+    router,
 });

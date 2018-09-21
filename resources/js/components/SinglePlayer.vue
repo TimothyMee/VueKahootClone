@@ -98,7 +98,6 @@
             if(value === "Right" && this.btnClassRight !== "btn btn-lg btn-success disabled"){
 
                 let newScore = this.$store.state.result[this.username].score + 1;
-                console.log('newScore' , newScore)
                 let user = {
                     username: this.username,
                     score: newScore,
@@ -112,7 +111,6 @@
                 this.btnClassWrong = "btn btn-lg btn-danger disabled";
 
                 /*pusher code goes here*/
-
                 axios.post('/add-score', {'user': this.username,
                                             'score': this.$store.state.result[this.username].score,
                                             'message': "Score Update"
@@ -133,7 +131,7 @@
         nextQuestion(){
             this.count += 1;
 
-            if(this.count <= 9){
+            if(this.count <= 1){
                 this.btnClassWrong = 'btn btn-lg btn-outline-danger';
                 this.btnClassRight = 'btn btn-lg btn-outline-danger';
                 this.randomNumber= Math.floor(Math.random() * 4) + 1;
@@ -144,16 +142,18 @@
 
                 axios.post('/add-score', {'user': this.username,
                                             'score': this.$store.state.result[this.username].score,
-                                            'message': "Score Update"
+                                            'message': "Done",
                                             })
                     .then(res => {
-//                        console.log('broadcast route', res);
+                        this.$store.commit('markUserAsFinished', this.username);
+
+                        this.$router.push({name: 'Result'});
                     })
                     .catch(err => {
                         console.log(err);
                     })
 
-                setTimeout()
+//                setTimeout()
             }
         },
 
@@ -174,6 +174,10 @@
                         this.$notify({type: 'error', text: `User "${e.user}" just joined`, duration:4000});
                     }else if(e.message === "Score Update"){
                         this.$notify({type: 'error', text: `User ${e.user}'s Score is ${e.score}`, duration:4000});
+                    }else if(e.message === "Done"){
+                        this.$store.commit('markUserAsFinished', e.user);
+                        this.$notify({type: 'error', text: `User ${e.user} is Done.`, duration:4000});
+
                     }
 
                     console.log(this.$store.state.result);

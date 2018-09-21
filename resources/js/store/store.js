@@ -33,6 +33,7 @@ const mutations = {
         state.result[user] = {
             score: 0,
             position:null,
+            finished:false
         }
     },
 
@@ -40,7 +41,12 @@ const mutations = {
         state.result[user.username] = {
             score: user.score,
             position:user.position,
+            finished: false,
         }
+    },
+
+    markUserAsFinished(state, user){
+        state.result[user].finished = true;
     }
 }
 
