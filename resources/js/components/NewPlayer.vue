@@ -1,6 +1,6 @@
 <template>
     <div class="container col-md-12" style="background: linear-gradient(to top, #4481eb 0%, #04befe 100%); height:100%; width:100%">
-        <notifications position="top right"/>
+        <notifications position="top center"/>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <br><br><br><br><br><br><br>

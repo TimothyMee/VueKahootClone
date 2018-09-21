@@ -52,9 +52,22 @@
             </div>
         </div>
 
-        <div v-else="">
-            Coming soon........
+        <div class="row justify-content-center" v-else="">
+            <div class="col-md-12">
+                <br><br><br><br><br><br><br>
+            </div>
+
+            <div class="col-md-12">
+                <div class="container col-md-6">
+                    <img src="../../../public/svg/loading.svg" alt="" style="width:400px; height:400px;">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <br><br><br><br><br><br><br>
+            </div>
         </div>
+
     </div>
 </template>
 
